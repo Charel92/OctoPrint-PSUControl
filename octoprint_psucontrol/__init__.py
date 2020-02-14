@@ -505,6 +505,15 @@ class PSUControl(octoprint.plugin.StartupPlugin,
             if skipQueuing:
                 return (None,)
 
+    def get_psu_state(self):
+        return self.isPSUOn
+
+    def toggle_psu(self):
+        if self.isPSUOn:
+            self.turn_psu_off()
+        else:
+            self.turn_psu_on()
+
     def turn_psu_on(self):
         if self.switchingMethod == 'GCODE' or self.switchingMethod == 'GPIO' or self.switchingMethod == 'SYSTEM':
             self._logger.info("Switching PSU On")
@@ -602,10 +611,7 @@ class PSUControl(octoprint.plugin.StartupPlugin,
         elif command == 'turnPSUOff':
             self.turn_psu_off()
         elif command == 'togglePSU':
-            if self.isPSUOn:
-                self.turn_psu_off()
-            else:
-                self.turn_psu_on()
+            self.toggle_psu()
         elif command == 'getPSUState':
             return jsonify(isPSUOn=self.isPSUOn)
 
@@ -780,3 +786,12 @@ def __plugin_load__():
         "octoprint.comm.protocol.gcode.queuing": __plugin_implementation__.hook_gcode_queuing,
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
     }
+
+    global __plugin_helpers__
+    __plugin_helpers__ = {
+        "turn_psu_on": __plugin_implementation__.turn_psu_on,
+        "turn_psu_off": __plugin_implementation__.turn_psu_off,
+        "toggle_psu": __plugin_implementation__.toggle_psu,
+        "get_psu_state": __plugin_implementation__.get_psu_state
+    }
+
