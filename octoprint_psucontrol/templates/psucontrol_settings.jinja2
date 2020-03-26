@@ -31,6 +31,7 @@
                 <!-- ko if: hasGPIO() -->
                 <option value="GPIO">GPIO Pin</option>
                 <!-- /ko -->
+                <option value="PLUGIN">OctoPrint Plugin</option>
             </select>
         </div>
     </div>
@@ -70,7 +71,17 @@
         </div>
     </div>
     <!-- /ko -->
-    <!-- ko if: settings.plugins.psucontrol.switchingMethod() === "GPIO" || settings.plugins.psucontrol.switchingMethod() === "SYSTEM" -->
+    <!-- ko if: settings.plugins.psucontrol.switchingMethod() === "PLUGIN" -->
+    <div class="control-group">
+        <label class="control-label">Switching Plugin</label>
+        <div class="controls">
+            <select data-bind="value: settings.plugins.psucontrol.switchingPlugin">
+                <option value="PLACEHOLDER">PLACEHOLDER</option>
+            </select>
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: settings.plugins.psucontrol.switchingMethod() === "GPIO" || settings.plugins.psucontrol.switchingMethod() === "SYSTEM" || settings.plugins.psucontrol.switchingMethod() === "PLUGIN" -->
     <div class="control-group">
         <div class="controls">
             <label class="checkbox">
@@ -105,6 +116,7 @@
                 <option value="GPIO">GPIO Pin</option>
                 <!-- /ko -->
                 <option value="SYSTEM">System Command</option>
+                <option value="PLUGIN">OctoPrint Plugin</option>
             </select>
         </div>
     </div>
@@ -127,6 +139,16 @@
         <label class="control-label">Sensing System Command</label>
         <div class="controls">
             <input type="text" class="input-block-level" data-bind="value: settings.plugins.psucontrol.senseSystemCommand">
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: settings.plugins.psucontrol.sensingMethod() === "PLUGIN" -->
+    <div class="control-group">
+        <label class="control-label">Sensing Plugin</label>
+        <div class="controls">
+            <select data-bind="value: settings.plugins.psucontrol.sensingPlugin">
+                <option value="PLACEHOLDER">PLACEHOLDER</option>
+            </select>
         </div>
     </div>
     <!-- /ko -->
